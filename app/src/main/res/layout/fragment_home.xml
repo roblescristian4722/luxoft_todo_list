@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.luxoft.todo_list.layout.home.HomeFragment">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.luxoft.todo_list.layout.home.HomeViewModel" />
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_task_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fac_add_task"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@string/fac_add_task_content_description"
+            android:onClick="@{(view) -> viewModel.onAddButtonPressed()}"
+            android:src="@drawable/ic_add_task"
+            app:fabCustomSize="60dp"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            tools:src="@drawable/ic_add_task" />
+    </RelativeLayout>
+</layout>
