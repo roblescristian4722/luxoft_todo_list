@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.luxoft.todo_list.R
 import com.luxoft.todo_list.TodoListApplication
 import com.luxoft.todo_list.databinding.FragmentHomeBinding
+import com.luxoft.todo_list.layout.common.BaseViewModel
 import com.luxoft.todo_list.layout.common.Event
 import com.luxoft.todo_list.layout.recyclerview.AdapterType
 import com.luxoft.todo_list.layout.recyclerview.DynamicAdapter
@@ -44,7 +45,7 @@ class HomeFragment: Fragment() {
 
         // Listeners
         binding.facAddTask.setOnClickListener { viewModel.onAddButtonPressed() }
-        viewModel.csv.observe(viewLifecycleOwner) { list ->
+        BaseViewModel.csv.observe(viewLifecycleOwner) { list ->
             list?.let { adapter.submitList(it) }
         }
 
@@ -53,6 +54,11 @@ class HomeFragment: Fragment() {
             when (screenEvent) {
                 HomeScreenEvents.AddButtonPressed -> {
                     findNavController().navigate(R.id.action_homeFragment_to_editorFragment)
+                }
+                is HomeScreenEvents.EditItem -> {
+                    val bundle = Bundle()
+                    bundle.putInt("position", screenEvent.position)
+                    findNavController().navigate(R.id.action_homeFragment_to_editorFragment, bundle)
                 }
             }
         })

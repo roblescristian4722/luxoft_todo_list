@@ -17,6 +17,7 @@ class EditorFragment : Fragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: EditorViewModel
     private lateinit var binding: FragmentEditorBinding
+    private var edit = -1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,6 +26,7 @@ class EditorFragment : Fragment() {
         (requireContext().applicationContext as TodoListApplication).appComponent.inject(this)
         binding = FragmentEditorBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this, viewModelFactory)[EditorViewModel::class.java]
+        edit = arguments?.getInt("position", -1) ?: -1
         return binding.root
     }
 
@@ -33,7 +35,7 @@ class EditorFragment : Fragment() {
         binding.fabCancel.setOnClickListener { findNavController().popBackStack() }
         binding.fabDone.setOnClickListener {
             binding.apply {
-                viewModel.doneBtnPressed(requireContext(), tietTitle.text.toString(), tietDescription.text.toString())
+                viewModel.doneBtnPressed(requireContext(), tietTitle.text.toString(), tietDescription.text.toString(), edit)
             }
         }
 

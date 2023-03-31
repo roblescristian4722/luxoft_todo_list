@@ -19,9 +19,11 @@ open class BaseViewModel<T>: ViewModel() {
     val event: LiveData<Event<T>>
         get() = _event
 
-    protected val _csv = MutableLiveData<List<TaskPresenter>>()
-    val csv: LiveData<List<TaskPresenter>>
-        get() = _csv
+    companion object {
+        protected val _csv = MutableLiveData<List<TaskPresenter>>()
+        val csv: LiveData<List<TaskPresenter>>
+            get() = _csv
+    }
 
     fun postEvent(event: T) {
         _event.postValue(Event(event))
@@ -48,7 +50,7 @@ open class BaseViewModel<T>: ViewModel() {
         writeToCSV(context, mutable, true)
     }
 
-    fun readCSV(context: Context) {
+    fun readCSV(context: Context): List<TaskPresenter> {
         val res: MutableList<TaskPresenter> = mutableListOf()
         try {
             var line: String? = ""
@@ -71,15 +73,17 @@ open class BaseViewModel<T>: ViewModel() {
             fin.close()
             Alert("res: ${res.map { it.id }}")
             _csv.postValue(res)
+            return res
         } catch (e: Exception) {
             Alert("Error reading file: $e")
         }
+        return listOf()
     }
 
     fun removeItem(context: Context, position: Int) {
-        _csv.value?.let { value ->
-            if (position < value.size) {
-                val mutable = value.toMutableList()
+        readCSV(context).let {
+            if (position < it.size) {
+                val mutable = it.toMutableList()
                 mutable.removeAt(position)
                 writeToCSV(context, mutable)
             }

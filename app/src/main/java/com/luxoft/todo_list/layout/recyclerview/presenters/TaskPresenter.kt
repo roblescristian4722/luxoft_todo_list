@@ -7,5 +7,11 @@ class TaskPresenter(other: Task): BasePresenter {
     val title: String = other.title
     val description: String = other.description
 
-    override fun areContentsTheSame(other: BasePresenter): Boolean = (other as TaskPresenter).id == id
+    override fun areContentsTheSame(other: BasePresenter): Boolean {
+        (other as TaskPresenter)
+        if (other.id == id && other.title == title && other.description == description) {
+            return true
+        }
+        return false
+    }
 }

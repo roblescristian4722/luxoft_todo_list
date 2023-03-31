@@ -7,4 +7,8 @@ class HomeViewModel @Inject constructor(): BaseViewModel<HomeScreenEvents>() {
     fun onAddButtonPressed() {
         postEvent(HomeScreenEvents.AddButtonPressed)
     }
+
+    fun editItem(position: Int) {
+        postEvent(HomeScreenEvents.EditItem(position))
+    }
 }
