@@ -65,6 +65,7 @@ class HomeFragment: Fragment() {
                     val bundle = Bundle().apply {
                         putInt("position", screenEvent.position)
                         putString("title", screenEvent.title)
+                        putString("description", screenEvent.description)
                     }
                     findNavController().navigate(R.id.action_homeFragment_to_editorFragment, bundle)
                 }

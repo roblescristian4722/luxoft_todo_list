@@ -9,13 +9,15 @@
         android:layout_height="55dp"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:clipChildren="false"
+        android:clipToPadding="false">
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/mtv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

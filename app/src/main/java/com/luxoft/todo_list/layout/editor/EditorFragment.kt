@@ -20,6 +20,7 @@ class EditorFragment : Fragment() {
     private lateinit var binding: FragmentEditorBinding
     private var edit = -1
     private var title = ""
+    private var description = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +31,7 @@ class EditorFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory)[EditorViewModel::class.java]
         edit = arguments?.getInt("position", -1) ?: -1
         title = arguments?.getString("title", "") ?: ""
+        description = arguments?.getString("description", "") ?: ""
         return binding.root
     }
 
@@ -46,6 +48,8 @@ class EditorFragment : Fragment() {
             binding.mtvTitleMode.text = getString(R.string.create_mode_title)
         } else {
             binding.mtvTitleMode.text = getString(R.string.edit_mode_title, title)
+            binding.tietTitle.setText(title)
+            binding.tietDescription.setText(description)
         }
 
         // Screen event listener

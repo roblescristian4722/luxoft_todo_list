@@ -34,7 +34,7 @@ open class BaseViewModel<T>: ViewModel() {
         val fout: FileOutputStream = context.openFileOutput(FILE_NAME, mode)
         try {
             for (i in list) {
-                fout.write("${i.id},${i.title},${i.description.replace("\n", "\\n")}\n".toByteArray())
+                fout.write("${i.id}|${i.title}|${i.description.replace("\n", "\\n")}\n".toByteArray())
             }
             _csv.postValue(list)
         } catch (e: Exception) {
@@ -60,7 +60,7 @@ open class BaseViewModel<T>: ViewModel() {
                 if (line == null) {
                     break
                 }
-                line.split(",").let {
+                line.split("|").let {
                     res.add(
                         TaskPresenter(
                             Task(it[0].toInt(), it[1], it[2].replace("\\n", "\n"))
@@ -69,7 +69,6 @@ open class BaseViewModel<T>: ViewModel() {
                 }
             } while (!line.isNullOrEmpty())
             fin.close()
-            Alert("res: ${res.map { it.id }}")
             _csv.postValue(res)
             return res
         } catch (e: Exception) {
