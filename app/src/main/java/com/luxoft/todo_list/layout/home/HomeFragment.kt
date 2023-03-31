@@ -15,14 +15,17 @@ import com.luxoft.todo_list.layout.recyclerview.AdapterType
 import com.luxoft.todo_list.layout.recyclerview.DynamicAdapter
 import com.luxoft.todo_list.layout.recyclerview.presenters.TaskPresenter
 import com.luxoft.todo_list.layout.recyclerview.viewholders.TaskItemViewHolder
-import com.luxoft.todo_list.utils.Alert
+import com.luxoft.todo_list.utils.InternalStorageUtil
 import javax.inject.Inject
 
 class HomeFragment: Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
+    lateinit var internalStorageUtil: InternalStorageUtil
     private lateinit var viewModel: HomeViewModel
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var adapter: DynamicAdapter<TaskPresenter, TaskItemViewHolder>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,17 +39,15 @@ class HomeFragment: Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.readCSV(requireContext())
+        internalStorageUtil.readCSV(requireContext())
+        adapter.submitList(internalStorageUtil.data)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val adapter = DynamicAdapter<TaskPresenter, TaskItemViewHolder>(AdapterType.TASK_VERTICAL_LIST, viewModel)
+        adapter = DynamicAdapter<TaskPresenter, TaskItemViewHolder>(AdapterType.TASK_VERTICAL_LIST, viewModel)
 
         // Listeners
         binding.facAddTask.setOnClickListener { viewModel.onAddButtonPressed() }
-        viewModel.csv.observe(viewLifecycleOwner) { list ->
-            list?.let { adapter.submitList(it) }
-        }
 
         // Screen event listener
         viewModel.event.observe(viewLifecycleOwner, Event.EventObserver { screenEvent ->

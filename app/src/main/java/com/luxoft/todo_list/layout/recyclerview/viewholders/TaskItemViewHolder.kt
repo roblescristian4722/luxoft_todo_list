@@ -11,7 +11,7 @@ class TaskItemViewHolder(private val binding: FragmentTaskItemBinding, private v
         binding.mtvTitle.text = presenter.title
 
         binding.fabDelete.setOnClickListener {
-            viewModel.removeItem(binding.root.context, position)
+//            viewModel.removeItem(binding.root.context, position)
         }
 
         binding.efabEdit.setOnClickListener {

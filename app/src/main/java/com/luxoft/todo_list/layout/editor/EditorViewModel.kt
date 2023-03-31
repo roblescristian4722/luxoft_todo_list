@@ -18,11 +18,11 @@ class EditorViewModel @Inject constructor(): BaseViewModel<EditorScreenEvents>()
             postEvent(EditorScreenEvents.DescriptionIsEmpty("Description cannot be empty"))
             return
         }
-        appendItem(context, TaskPresenter(Task(
-            1,
-            title,
-            description
-        )))
+//        appendItem(context, TaskPresenter(Task(
+//            csv.value?.size ?: 1,
+//            title,
+//            description
+//        )))
         postEvent(EditorScreenEvents.TaskAdded)
     }
 }

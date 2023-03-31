@@ -11,7 +11,8 @@ import javax.inject.Singleton
 @Singleton
 @Component(
     modules = [
-        ViewModelModule::class
+        ViewModelModule::class,
+        InternalStorageUtilModule::class
     ]
 )
 interface AppComponent {
