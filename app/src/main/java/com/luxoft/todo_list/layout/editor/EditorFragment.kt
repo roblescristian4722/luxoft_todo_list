@@ -1,4 +1,4 @@
-package com.luxoft.todo_list.layout.home
+package com.luxoft.todo_list.layout.editor
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,39 +7,40 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.luxoft.todo_list.R
 import com.luxoft.todo_list.TodoListApplication
-import com.luxoft.todo_list.databinding.FragmentHomeBinding
+import com.luxoft.todo_list.databinding.FragmentEditorBinding
 import com.luxoft.todo_list.layout.common.Event
+import com.luxoft.todo_list.utils.Alert
 import javax.inject.Inject
 
-class HomeFragment: Fragment() {
+class EditorFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var viewModel: HomeViewModel
-    private lateinit var binding: FragmentHomeBinding
+    private lateinit var viewModel: EditorViewModel
+    private lateinit var binding: FragmentEditorBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         (requireContext().applicationContext as TodoListApplication).appComponent.inject(this)
-        viewModel = ViewModelProvider(this, viewModelFactory)[HomeViewModel::class.java]
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding = FragmentEditorBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(this, viewModelFactory)[EditorViewModel::class.java]
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // Listeners
-        binding.facAddTask.setOnClickListener { viewModel.onAddButtonPressed() }
+        binding.fabCancel.setOnClickListener { findNavController().popBackStack() }
+        binding.fabDone.setOnClickListener {
+            binding.apply {
+                viewModel.doneBtnPressed(tietTitle.text.toString(), tietDescription.text.toString())
+            }
+        }
 
         // Screen event listener
         viewModel.event.observe(viewLifecycleOwner, Event.EventObserver { screenEvent ->
-            when (screenEvent) {
-                HomeScreenEvents.AddButtonPressed -> {
-                    findNavController().navigate(R.id.action_homeFragment_to_editorFragment)
-                }
-            }
+
         })
     }
 }

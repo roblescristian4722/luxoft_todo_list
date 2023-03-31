@@ -2,6 +2,7 @@ package com.luxoft.todo_list.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.luxoft.todo_list.layout.editor.EditorViewModel
 import com.luxoft.todo_list.layout.home.HomeViewModel
 import dagger.Binds
 import dagger.MapKey
@@ -19,7 +20,7 @@ class ViewModelFactory @Inject constructor(private val viewModels: MutableMap<Cl
 }
 
 @Target(AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER, AnnotationTarget.PROPERTY_SETTER)
-@kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
+@Retention(AnnotationRetention.RUNTIME)
 @MapKey
 internal annotation class ViewModelKey(val value: KClass<out ViewModel>)
 
@@ -32,7 +33,12 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(HomeViewModel::class)
-    internal abstract fun postListViewModel(viewModel: HomeViewModel): ViewModel
+    internal abstract fun postHomeViewModel(viewModel: HomeViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(EditorViewModel::class)
+    internal abstract fun postEditorViewModel(viewModel: EditorViewModel): ViewModel
 
     //Add more ViewModels here
 }

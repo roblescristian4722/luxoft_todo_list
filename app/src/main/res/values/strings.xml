@@ -3,4 +3,10 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="fac_add_task_content_description">Adds a new task to the TO-DO list</string>
+    <string name="cta_add_task">Add task</string>
+    <string name="description_delete_task_button">delete task button</string>
+    <string name="description_edit_task_button">edit_task_button</string>
+    <string name="cta_delete_task">U sure?</string>
+    <string name="hint_title">Title</string>
+    <string name="hint_description">Description</string>
 </resources>

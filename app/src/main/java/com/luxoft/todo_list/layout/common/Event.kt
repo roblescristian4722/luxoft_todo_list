@@ -2,23 +2,22 @@ package com.luxoft.todo_list.layout.common
 
 import androidx.lifecycle.Observer
 
-class Event<out T>(private val data: T) {
-    private var dataHasBeenSet = false
+class Event<out T>(private val content: T) {
+    private var contentHasBeenHandled = false
 
-    fun getData(): T? {
-        if (dataHasBeenSet) {
+    fun getContentIfNotHandled(): T? {
+        if (contentHasBeenHandled) {
             return null
         }
-        dataHasBeenSet = true
-        return data
+        contentHasBeenHandled = true
+        return content
     }
 
-    class EventObserver<T>(private val callback: (event: T) -> Unit): Observer<Event<T>> {
-        override fun onChanged(event: Event<T>) {
-            event.getData()?.let { value ->
-                callback(value)
+    class EventObserver<T>(private val callback: (onEventUnhandled: T) -> Unit): Observer<Event<T>> {
+        override fun onChanged(value: Event<T>) {
+            value.getContentIfNotHandled()?.let {
+                callback(it)
             }
         }
-
     }
 }

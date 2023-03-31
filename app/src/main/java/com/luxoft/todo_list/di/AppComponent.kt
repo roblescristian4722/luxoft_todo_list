@@ -2,6 +2,7 @@ package com.luxoft.todo_list.di
 
 import android.content.Context
 import com.luxoft.todo_list.TodoListApplication
+import com.luxoft.todo_list.layout.editor.EditorFragment
 import com.luxoft.todo_list.layout.home.HomeFragment
 import dagger.BindsInstance
 import dagger.Component
@@ -21,4 +22,5 @@ interface AppComponent {
 
     fun inject(application: TodoListApplication)
     fun inject(homeFragment: HomeFragment)
+    fun inject(editorFragment: EditorFragment)
 }
