@@ -9,4 +9,6 @@
     <string name="cta_delete_task">U sure?</string>
     <string name="hint_title">Title</string>
     <string name="hint_description">Description</string>
+    <string name="edit_mode_title">Edit task %s</string>
+    <string name="create_mode_title">Create new task</string>
 </resources>

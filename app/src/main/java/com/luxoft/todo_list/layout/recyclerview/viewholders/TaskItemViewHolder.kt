@@ -15,7 +15,7 @@ class TaskItemViewHolder(private val binding: FragmentTaskItemBinding, private v
         }
 
         binding.efabEdit.setOnClickListener {
-            viewModel.editItem(position)
+            viewModel.editItem(position, presenter.title)
         }
 
         binding.mtvTitle.setOnClickListener {

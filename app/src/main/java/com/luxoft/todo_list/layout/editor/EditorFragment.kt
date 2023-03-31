@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.luxoft.todo_list.R
 import com.luxoft.todo_list.TodoListApplication
 import com.luxoft.todo_list.databinding.FragmentEditorBinding
 import com.luxoft.todo_list.layout.common.Event
@@ -18,6 +19,7 @@ class EditorFragment : Fragment() {
     private lateinit var viewModel: EditorViewModel
     private lateinit var binding: FragmentEditorBinding
     private var edit = -1
+    private var title = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,6 +29,7 @@ class EditorFragment : Fragment() {
         binding = FragmentEditorBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this, viewModelFactory)[EditorViewModel::class.java]
         edit = arguments?.getInt("position", -1) ?: -1
+        title = arguments?.getString("title", "") ?: ""
         return binding.root
     }
 
@@ -37,6 +40,12 @@ class EditorFragment : Fragment() {
             binding.apply {
                 viewModel.doneBtnPressed(requireContext(), tietTitle.text.toString(), tietDescription.text.toString(), edit)
             }
+        }
+
+        if (title.isEmpty()) {
+            binding.mtvTitleMode.text = getString(R.string.create_mode_title)
+        } else {
+            binding.mtvTitleMode.text = getString(R.string.edit_mode_title, title)
         }
 
         // Screen event listener
