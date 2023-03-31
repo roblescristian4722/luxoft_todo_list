@@ -12,4 +12,5 @@
     <string name="edit_mode_title">Edit task %s</string>
     <string name="create_mode_title">Create new task</string>
     <string name="task_displayer_id">Task #%s</string>
+    <string name="empty_list_message">There are no tasks yet, try creating a new one first :D</string>
 </resources>

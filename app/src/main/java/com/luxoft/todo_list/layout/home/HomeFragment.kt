@@ -16,7 +16,6 @@ import com.luxoft.todo_list.layout.recyclerview.AdapterType
 import com.luxoft.todo_list.layout.recyclerview.DynamicAdapter
 import com.luxoft.todo_list.layout.recyclerview.presenters.TaskPresenter
 import com.luxoft.todo_list.layout.recyclerview.viewholders.TaskItemViewHolder
-import com.luxoft.todo_list.utils.Alert
 import javax.inject.Inject
 
 class HomeFragment: Fragment() {
@@ -47,6 +46,13 @@ class HomeFragment: Fragment() {
         binding.facAddTask.setOnClickListener { viewModel.onAddButtonPressed() }
         BaseViewModel.csv.observe(viewLifecycleOwner) { list ->
             list?.let { adapter.submitList(it) }
+            if (list.isNotEmpty()) {
+                binding.mtvEmptyListMessage.visibility = View.GONE
+                binding.rvTaskList.visibility = View.VISIBLE
+            } else {
+                binding.mtvEmptyListMessage.visibility = View.VISIBLE
+                binding.rvTaskList.visibility = View.GONE
+            }
         }
 
         // Screen event listener

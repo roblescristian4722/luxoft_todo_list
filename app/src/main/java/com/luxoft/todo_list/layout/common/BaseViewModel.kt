@@ -30,14 +30,12 @@ open class BaseViewModel<T>: ViewModel() {
     }
 
     fun writeToCSV(context: Context, list: List<TaskPresenter>, append: Boolean = false) {
-        Alert("list: $list")
         val mode = if (append) Context.MODE_APPEND or Context.MODE_PRIVATE else Context.MODE_PRIVATE
         val fout: FileOutputStream = context.openFileOutput(FILE_NAME, mode)
         try {
             for (i in list) {
                 fout.write("${i.id},${i.title},${i.description.replace("\n", "\\n")}\n".toByteArray())
             }
-            Alert("new list: $list")
             _csv.postValue(list)
         } catch (e: Exception) {
             Alert("Error writing file: $e")
