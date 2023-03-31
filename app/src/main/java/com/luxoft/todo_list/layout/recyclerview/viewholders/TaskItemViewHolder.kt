@@ -19,7 +19,7 @@ class TaskItemViewHolder(private val binding: FragmentTaskItemBinding, private v
         }
 
         binding.mtvTitle.setOnClickListener {
-
+            viewModel.displayItem(presenter)
         }
     }
 

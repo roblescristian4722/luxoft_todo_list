@@ -11,4 +11,5 @@
     <string name="hint_description">Description</string>
     <string name="edit_mode_title">Edit task %s</string>
     <string name="create_mode_title">Create new task</string>
+    <string name="task_displayer_id">Task #%s</string>
 </resources>

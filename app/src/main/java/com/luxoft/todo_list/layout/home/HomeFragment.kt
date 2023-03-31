@@ -56,10 +56,19 @@ class HomeFragment: Fragment() {
                     findNavController().navigate(R.id.action_homeFragment_to_editorFragment)
                 }
                 is HomeScreenEvents.EditItem -> {
-                    val bundle = Bundle()
-                    bundle.putInt("position", screenEvent.position)
-                    bundle.putString("title", screenEvent.title)
+                    val bundle = Bundle().apply {
+                        putInt("position", screenEvent.position)
+                        putString("title", screenEvent.title)
+                    }
                     findNavController().navigate(R.id.action_homeFragment_to_editorFragment, bundle)
+                }
+                is HomeScreenEvents.DisplayItem -> {
+                    val bundle = Bundle().apply {
+                        putInt("id", screenEvent.id)
+                        putString("title", screenEvent.title)
+                        putString("description", screenEvent.description)
+                    }
+                    findNavController().navigate(R.id.action_homeFragment_to_taskDisplayerFragment, bundle)
                 }
             }
         })
