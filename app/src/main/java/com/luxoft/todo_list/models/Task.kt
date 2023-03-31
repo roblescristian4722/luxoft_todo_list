@@ -1,6 +1,7 @@
 package com.luxoft.todo_list.models
 
 data class Task(
-    private val title: String = "",
-    private val description: String = ""
+    val id: Int = 1,
+    val title: String = "",
+    val description: String = ""
 )

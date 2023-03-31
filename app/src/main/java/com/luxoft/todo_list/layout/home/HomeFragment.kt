@@ -11,6 +11,11 @@ import com.luxoft.todo_list.R
 import com.luxoft.todo_list.TodoListApplication
 import com.luxoft.todo_list.databinding.FragmentHomeBinding
 import com.luxoft.todo_list.layout.common.Event
+import com.luxoft.todo_list.layout.recyclerview.AdapterType
+import com.luxoft.todo_list.layout.recyclerview.DynamicAdapter
+import com.luxoft.todo_list.layout.recyclerview.presenters.TaskPresenter
+import com.luxoft.todo_list.layout.recyclerview.viewholders.TaskItemViewHolder
+import com.luxoft.todo_list.utils.Alert
 import javax.inject.Inject
 
 class HomeFragment: Fragment() {
@@ -29,9 +34,19 @@ class HomeFragment: Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.readCSV(requireContext())
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val adapter = DynamicAdapter<TaskPresenter, TaskItemViewHolder>(AdapterType.TASK_VERTICAL_LIST, viewModel)
+
         // Listeners
         binding.facAddTask.setOnClickListener { viewModel.onAddButtonPressed() }
+        viewModel.csv.observe(viewLifecycleOwner) { list ->
+            list?.let { adapter.submitList(it) }
+        }
 
         // Screen event listener
         viewModel.event.observe(viewLifecycleOwner, Event.EventObserver { screenEvent ->
@@ -41,5 +56,7 @@ class HomeFragment: Fragment() {
                 }
             }
         })
+
+        binding.rvTaskList.adapter = adapter
     }
 }
